@@ -5,9 +5,9 @@ services:
     extends:
       file: ./mysql/docker-compose.yml
       service: mysql
-    #volumes:
-    #  - mysqllog:/var/log/mysql
-    #  - ./mysql/conf.d:/etc/mysql/conf.d
+    volumes:
+      - mysqllog:/var/log/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
 
   phpmyadmin:
     extends:
