@@ -1,8 +1,8 @@
 [mysqld]
 log_output = table
 general_log = 1
-# general_log_file = /var/log/mysql/general_log.log
+general_log_file = /var/log/mysql/general_log.log
 slow_query_log = 1
-# slow_query_log_file = /var/log/mysql/slow_query_log.log
-slow_query_log_microseconds_timestamp = on
+slow_query_log_file = /var/log/mysql/slow_query_log.log
+# slow_query_log_microseconds_timestamp = on # percona only
 log_queries_not_using_indexes = on
