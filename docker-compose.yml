@@ -1,0 +1,4 @@
+
+
+      - mysqllog:/var/log/mysql
+      - ./conf.d:/etc/mysql/conf.d
