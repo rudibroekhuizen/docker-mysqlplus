@@ -1,4 +1,15 @@
+version: '2'
 
-
+services:
+  mysql:
+    extends:
+      file: ./mysql/docker-compose.yml
+      service: mysql
+    volumes:
       - mysqllog:/var/log/mysql
-      - ./conf.d:/etc/mysql/conf.d
+      - ./mysql/conf.d:/etc/mysql/conf.d
+
+  phpmyadmin:
+    extends:
+      file: ./phpmyadmin/docker-compose.yml
+      service: phpmyadmin
