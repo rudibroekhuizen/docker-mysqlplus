@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  mysql:
+    build: ./
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mypass
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mypass
+
+volumes:
+  mysqldata:
