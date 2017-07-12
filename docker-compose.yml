@@ -13,3 +13,5 @@ services:
     extends:
       file: ./phpmyadmin/docker-compose.yml
       service: phpmyadmin
+    depends_on:
+      - mysql
