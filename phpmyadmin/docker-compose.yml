@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  phpmyadmin:
+    build: ./
+    volumes:
+      - /sessions
+    ports:
+      - 8090:80
+    environment:
+      - PMA_ARBITRARY=1
