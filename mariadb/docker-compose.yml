@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  mysql:
+    build: ./
+    volumes:
+      - mariadbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mypass
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mypass
+
+volumes:
+  mariadbdata:
