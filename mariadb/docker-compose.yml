@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  mysql:
+  mariadb:
     build: ./
     volumes:
       - mariadbdata:/var/lib/mysql
