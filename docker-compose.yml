@@ -9,13 +9,23 @@ services:
       - mysqllog:/var/log/mysql
       - ./mysql/conf.d:/etc/mysql/conf.d
 
+  mariadb:
+    extends:
+      file: ./mariadb/docker-compose.yml
+      service: mariadb
+    volumes:
+      - mariadblog:/var/log/mysql
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+
   phpmyadmin:
     extends:
       file: ./phpmyadmin/docker-compose.yml
       service: phpmyadmin
     depends_on:
       - mysql
+      - mariadb
 
 volumes:
-  mysqldata:
+  #mysqldata:
   mysqllog:
+  mariadblog:
