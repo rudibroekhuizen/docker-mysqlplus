@@ -1,5 +1,5 @@
 [mysqld]
-log_output = table
+log_output = file
 general_log = 1
 general_log_file = /tmp/general_log.log
 slow_query_log = 1

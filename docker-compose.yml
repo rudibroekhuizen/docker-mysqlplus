@@ -6,7 +6,7 @@ services:
       file: ./mysql/docker-compose.yml
       service: mysql
     volumes:
-      - mysqllog:/tmp
+      - mysqllog:/var/lib/mysql-files
       - ./mysql/conf.d:/etc/mysql/conf.d
 
   mariadb:
@@ -14,7 +14,7 @@ services:
       file: ./mariadb/docker-compose.yml
       service: mariadb
     volumes:
-      - mariadblog:/tmp
+      - mariadblog:/var/lib/mysql-files
       - ./mariadb/conf.d:/etc/mysql/conf.d
 
   phpmyadmin:
