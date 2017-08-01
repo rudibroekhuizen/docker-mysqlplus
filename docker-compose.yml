@@ -6,16 +6,17 @@ services:
       file: ./mysql/docker-compose.yml
       service: mysql
     volumes:
-      - mysqllog:/var/lib/mysql-files
+      #- mysqllog:/var/lib/mysql-files
+      - mysqllog:/tmp
       - ./mysql/conf.d:/etc/mysql/conf.d
 
-  mariadb:
-    extends:
-      file: ./mariadb/docker-compose.yml
-      service: mariadb
-    volumes:
-      - mariadblog:/var/lib/mysql-files
-      - ./mariadb/conf.d:/etc/mysql/conf.d
+  #mariadb:
+  #  extends:
+  #    file: ./mariadb/docker-compose.yml
+  #    service: mariadb
+  #  volumes:
+  #    - mariadblog:/var/lib/mysql-files
+  #    - ./mariadb/conf.d:/etc/mysql/conf.d
 
   phpmyadmin:
     extends:
@@ -23,7 +24,7 @@ services:
       service: phpmyadmin
     depends_on:
       - mysql
-      - mariadb
+  #    - mariadb
 
   elasticsearch:
     extends:
