@@ -8,5 +8,5 @@ yes "mysql -b -N -u root -pmypass mysql < slow.sql >> /tmp/slow.log" | parallel 
 
 Run query 1000 times:
 ```bash
-yes "mysql -b -N -u root -pmypass mysql < go.sql" | head -n 1000 | parallel
+yes "mysql -b -N -u root -pmypass mysql < query.sql" | head -n 1000 | parallel
 ```
