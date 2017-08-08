@@ -1,1 +1,1 @@
-SELECT count(*) FROM slow_log;
+SELECT count(*) FROM mysql.slow_log;
