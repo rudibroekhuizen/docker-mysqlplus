@@ -1,11 +1,21 @@
 # docker-mysqlplus
 MySQL with Kibana dashboard running on Docker
 
-phpMyAdmin:
-http://localhost:8090/
+## Usage
+Install Docker. Clone this repo to your local machine. Run docker-compose: 
+```bash
+docker-compose up
+```
 
+### Open phpMyAdmin webinterface
+```bash
+http://localhost:8090/
+```
+
+### Connect to MySQL container
 ```bash
 docker exec -it dockermysqlplus_mysql_1 sh
+su
 ```
 
 Pull records from slow_log and truncate, repeat every 30 seconds:
