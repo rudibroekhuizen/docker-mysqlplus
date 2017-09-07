@@ -1,6 +1,9 @@
 # docker-mysqlplus
 MySQL with Kibana dashboard running on Docker
 
+phpMyAdmin:
+http://localhost:8090/
+
 ```bash
 docker exec -it dockermysqlplus_mysql_1 sh
 ```
