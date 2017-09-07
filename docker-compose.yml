@@ -9,7 +9,7 @@ services:
       #- mysqllog:/var/lib/mysql-files
       - mysqllog:/tmp
       - ./mysql/conf.d:/etc/mysql/conf.d
-      - ./mysql/opt:/opt
+      - ./mysql/scripts:/scripts
 
   #mariadb:
   #  extends:
