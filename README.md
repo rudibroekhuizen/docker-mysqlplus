@@ -12,10 +12,11 @@ docker-compose up
 http://localhost:8090/
 ```
 
-### Connect to MySQL container
+### Connect to MySQL container and login with MySQL client
 ```bash
 docker exec -it dockermysqlplus_mysql_1 sh
 su
+mysql -b -N -u root -pmypass mysql
 ```
 
 ### General and slow log to table
