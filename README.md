@@ -20,8 +20,7 @@ mysql -b -N -u root -pmypass mysql
 ```
 
 ### General and slow log to table
-SHOW VARIABLES LIKE '%log%';
-
+```bash
 SET GLOBAL log_output = 'table';
 
 SET GLOBAL general_log = 'ON';
@@ -30,6 +29,8 @@ SET GLOBAL slow_query_log = 'ON';
 SET GLOBAL general_log = 'OFF';
 SET GLOBAL slow_query_log = 'OFF';
 
+SHOW VARIABLES LIKE '%log%';
+```
 
 ### Pull records from slow_log and truncate, repeat every 30 seconds
 ```bash
