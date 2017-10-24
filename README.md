@@ -22,6 +22,7 @@ mysql -b -N -u root -pmypass mysql
 ### General and slow log to table
 ```bash
 SET GLOBAL log_output = 'table';
+SET GLOBAL long_query_time = 0;
 
 SET GLOBAL general_log = 'ON';
 SET GLOBAL slow_query_log = 'ON';
