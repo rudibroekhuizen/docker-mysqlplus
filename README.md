@@ -47,3 +47,14 @@ yes "mysql -b -N -u root -pmypass mysql < /scripts/general.sql >> /tmp/general.l
 ```bash
 yes "mysql -b -N -u root -pmypass mysql < /scripts/query.sql" | head -n 1000 | parallel
 ```
+
+### Useful commands
+```bash
+# Remove Elasticsearch indexes:
+$ curl -XDELETE elasticsearch:9200/logstash-mysql-*
+
+# Check CPU consumption
+$ docker stats $(docker inspect -f "{{ .Name }}" $(docker ps -q))
+
+# Remove containers plus volumes
+$ docker-compose down -v --remove-orphans --rmi all
