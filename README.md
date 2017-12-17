@@ -18,6 +18,12 @@ docker-compose exec mysql bash
 mysql -b -N -u root -pmypass mysql
 ```
 
+### Import Sakila database
+```bash
+docker-compose exec mysql bash
+bash ./scripts/sakila.sh
+```
+
 ### General and slow log to table
 ```bash
 SET GLOBAL log_output = 'table';
