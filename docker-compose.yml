@@ -69,6 +69,7 @@ volumes:
   mariadbdata:
   mariadblog:
   esdata:
+  schemaspydata:
 
 networks:
   esnet:

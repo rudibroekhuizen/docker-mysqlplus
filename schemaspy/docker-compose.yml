@@ -15,9 +15,7 @@ services:
     volumes:
       - schemaspydata:/output
 #     - ./schemaspy.properties:/schemaspy.properties
-    networks:
-      - pgnet
-    command: "-t pgsql -host mysql -port 3306 -db sakila -s mysql -u root -p mypass"
+    command: "-t mysql -host mysql -port 3306 -db sakila -s sakila -u root -p mypass"
 
 volumes:
   schemaspydata:
