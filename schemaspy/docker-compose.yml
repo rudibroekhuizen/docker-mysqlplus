@@ -15,7 +15,7 @@ services:
     volumes:
       - schemaspydata:/output
 #     - ./schemaspy.properties:/schemaspy.properties
-    command: "-t mysql -host mysql -port 3306 -db ${MYSQL_DATABASE} -s sakila -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
+    command: "-t mysql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DATABASE} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
 
 volumes:
   schemaspydata:
