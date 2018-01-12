@@ -165,3 +165,4 @@ volumes:
   elasticsearch_data:
   schemaspydata:
   grafana_data:
+  schemaspy_data:
