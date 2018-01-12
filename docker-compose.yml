@@ -105,7 +105,7 @@ services:
     build: ./mysqlsh
     tty: true
     volumes:
-      - mysqldata:/var/lib/mysql
+      - mysqllog:/tmp
       - ./mysqlsh/scripts:/scripts
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
