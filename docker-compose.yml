@@ -108,6 +108,7 @@ services:
 
   mysqlsh:
     build: ./mysqlsh
+    tty: true
 #    volumes:
 #      - pglog:/tmp
 #    networks:
