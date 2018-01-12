@@ -162,6 +162,6 @@ volumes:
   mysqllog:
   mariadbdata:
   mariadblog:
-  esdata:
+  elasticsearch_data:
   schemaspydata:
   grafana_data:
