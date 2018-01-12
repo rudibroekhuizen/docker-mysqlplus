@@ -96,7 +96,7 @@ services:
 #     - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:grafana.naturalis.nl}
 
   mysql:
-    build: ./
+    build: ./mysql
     volumes:
       - mysqldata:/var/lib/mysql
     environment:
