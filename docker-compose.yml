@@ -164,3 +164,4 @@ volumes:
   mariadblog:
   esdata:
   schemaspydata:
+  grafana_data:
