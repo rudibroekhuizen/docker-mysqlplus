@@ -63,8 +63,6 @@ services:
     image: docker.elastic.co/kibana/kibana-oss:6.1.0
     expose:
       - "5601"
-#   ports: # remove when using traefik only
-#     - "5601:5601"
     networks:
       - web
       - default
@@ -97,26 +95,22 @@ services:
       - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:grafana.docker.localhost}
 #     - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:grafana.naturalis.nl}
 
-  postgres:
-    build: ./postgres
+  mysql:
+    build: ./
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./postgres/conf.d:/conf.d
+      - mysqldata:/var/lib/mysql
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - REPLICATION_USER=${REPLICATION_USER}
-      - REPLICATION_PASSWORD=${REPLICATION_PASSWORD}
-    networks:
-      - pgnet
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-  psql:
-    build: ./psql
-    volumes:
-      - pglog:/tmp
-    networks:
-      - pgnet
+  mysqlsh:
+    build: ./mysqlsh
+#    volumes:
+#      - pglog:/tmp
+#    networks:
+#      - pgnet
 
   pgadmin:
     build: ./pgadmin
@@ -155,10 +149,8 @@ services:
       - "traefik.docker.network=web"
       - "traefik.enable=true"
       - "traefik.port=80"
-      - ${SCHEMASPY_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.docker.localhost}
-#     - ${SCHEMASPY_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.naturalis.nl}
-      - ${SCHEMASPY_AUTH:-traefik.frontend.auth.basic=schemaspy:$apr1$.lcgllId$9sUY3fPk/gDuh3NQ55024/}
-
+      - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.docker.localhost}
+#     - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.naturalis.nl}
 
   schemaspy:
     image: schemaspy/schemaspy:snapshot
@@ -175,27 +167,9 @@ networks:
     external: true
 
 volumes:
-  elasticsearch_data:
-  grafana_data:
-  pgadmin_data:
-  schemaspy_data:
-  pglog:
-  pgdata:
-  pgadmin:
-
-#filebeat should not run in this cluser since it won't every really be
-#
-# ====================================================================
-#  filebeat:
-#    image: docker.elastic.co/beats/filebeat:6.1.0
-#    network_mode: host
-#   #      - filebeat
-#        #    extra_hosts:
-#        #      - "insight-elasticsearch.naturalis.nl:127.0.0.1"
-#    volumes:
-#      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-#      - ./filebeat/modules.d:/usr/share/filebeat/modules.d
-#      - ./filebeat/module:/usr/share/filebeat/module
-#      - ./filebeat/log:/log
-#      - ./filebeat/template:/template
-
+  mysqldata:
+  mysqllog:
+  mariadbdata:
+  mariadblog:
+  esdata:
+  schemaspydata:
