@@ -117,6 +117,8 @@ services:
     build: ./phpmyadmin
     volumes:
       - /sessions
+    ports:
+      - 8090:80
     expose:
       - "8090"
     networks:
@@ -133,7 +135,7 @@ services:
       - "traefik.docker.network=web"
       - "traefik.enable=true"
       - "traefik.port=8090"
-      - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:phpmyadmin.docker.localhost}
+      - ${PHPMYADMIN_URL_CONFIG:-traefik.frontend.rule=Host:phpmyadmin.docker.localhost}
 
   schemaspy_nginx:
     image: nginx:1.13.1-alpine
@@ -150,8 +152,7 @@ services:
       - "traefik.docker.network=web"
       - "traefik.enable=true"
       - "traefik.port=80"
-      - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.docker.localhost}
-#     - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.naturalis.nl}
+      - ${SCHEMASPY_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.docker.localhost}
 
   schemaspy:
     image: schemaspy/schemaspy:snapshot
