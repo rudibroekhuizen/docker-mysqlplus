@@ -161,7 +161,7 @@ services:
 #     - ./schemaspy.properties:/schemaspy.properties
     networks:
       - pgnet
-    command: "-t pgsql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DATABASE} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
+    command: "-t mysql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DATABASE} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
 
 networks:
   pgnet:
