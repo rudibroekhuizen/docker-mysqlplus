@@ -106,6 +106,7 @@ services:
     tty: true
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./mysqlsh/scripts:/scripts
 
   phpmyadmin:
     build: ./phpmyadmin
