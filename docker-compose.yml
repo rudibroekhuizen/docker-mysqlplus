@@ -93,7 +93,6 @@ services:
   mysql:
     build: ./mysql
     volumes:
-      - mysqldata:/var/lib/mysql
       - ./mysql/conf.d:/etc/mysql/conf.d
       - ./mysql/scripts:/scripts
     environment:
@@ -105,10 +104,8 @@ services:
   mysqlsh:
     build: ./mysqlsh
     tty: true
-#    volumes:
-#      - pglog:/tmp
-#    networks:
-#      - pgnet
+    volumes:
+      - mysqldata:/var/lib/mysql
 
   phpmyadmin:
     build: ./phpmyadmin
