@@ -112,27 +112,18 @@ services:
 #    networks:
 #      - pgnet
 
-  pgadmin:
-    build: ./pgadmin
+  phpmyadmin:
+    build: ./phpmyadmin
     volumes:
-      - "pgadmin:/home/pgadmin"
-    expose:
-      - "5050"
+      - /sessions
     ports:
-      - 5050:5050
-    networks:
-      - web
-      - pgnet
+      - 8090:80
     environment:
-      - DEFAULT_USER=${POSTGRES_USER}
-      - DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
-    labels:
-      - "traefik.backend=naturalis-pgadmin"
-      - "traefik.docker.network=web"
-      - "traefik.enable=true"
-      - "traefik.port=5050"
-      - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:pgadmin.docker.localhost}
-#     - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:pgadmin.naturalis.nl}
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${MYSQL_HOST}
+      - PMA_PORT=${MYSQL_PORT}
+      - PMA_USER=root
+      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   schemaspy_nginx:
     image: nginx:1.13.1-alpine
@@ -159,7 +150,7 @@ services:
 #     - ./schemaspy.properties:/schemaspy.properties
     networks:
       - pgnet
-    command: "-t pgsql -host ${POSTGRES_HOST} -port ${POSTGRES_PORT} -db ${POSTGRES_DB} -s ${POSTGRES_SCHEMA} -u ${POSTGRES_USER} -p ${POSTGRES_PASSWORD}"
+    command: "-t pgsql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DB} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
 
 networks:
   pgnet:
