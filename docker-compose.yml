@@ -117,10 +117,8 @@ services:
     build: ./phpmyadmin
     volumes:
       - /sessions
-    ports:
-      - 8090:80
     expose:
-      - "8090"
+      - "80"
     networks:
       - web
       - default
@@ -134,7 +132,7 @@ services:
       - "traefik.backend=naturalis-phpmyadmin"
       - "traefik.docker.network=web"
       - "traefik.enable=true"
-      - "traefik.port=8090"
+      - "traefik.port=80"
       - ${PHPMYADMIN_URL_CONFIG:-traefik.frontend.rule=Host:phpmyadmin.docker.localhost}
 
   schemaspy_nginx:
