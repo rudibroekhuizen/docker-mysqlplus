@@ -1,76 +1,177 @@
-version: '2'
+version: '3'
 
 services:
-  mysql:
-    extends:
-      file: ./mysql/docker-compose.yml
-      service: mysql
+  traefik:
+    image: traefik:1.4.6
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - web
     volumes:
-      #- mysqllog:/var/lib/mysql-files
-      - mysqllog:/tmp
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - ./mysql/scripts:/scripts
-
-  #mariadb:
-  #  extends:
-  #    file: ./mariadb/docker-compose.yml
-  #    service: mariadb
-  #  volumes:
-  #    - mariadblog:/var/lib/mysql-files
-  #    - ./mariadb/conf.d:/etc/mysql/conf.d
-
-  phpmyadmin:
-    extends:
-      file: ./phpmyadmin/docker-compose.yml
-      service: phpmyadmin
-    depends_on:
-      - mysql
-  #    - mariadb
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${TRAEFIK_TOML_FILE:-./traefik/traefik.toml}:/traefik.toml
+      - ${ACME_JSON:-./traefik/acme.json}:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8080"
+      - ${TRAEFIK_URL_CONFIG:-traefik.frontend.rule=Host:traefik.docker.localhost}
 
   elasticsearch:
-    extends:
-      file: ./elasticsearch/docker-compose.yml
-      service: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.1.0
+    volumes:
+    - elasticsearch_data:/usr/share/elasticsearch/data
+    environment:
+      # so support single node development
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.backend=naturalis-elasticsearch"
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.port=9200"
+      - ${ELASTICSEARCH_URL_CONFIG:-traefik.frontend.rule=Host:elasticsearch.docker.localhost}
+      - ${ELASTICSEARCH_AUTH:-traefik.frontend.auth.basic=kibana:$apr1$.lcgllId$9sUY3fPk/gDuh3NQ55024/}
 
   logstash:
-    extends:
-      file: ./logstash/docker-compose.yml
-      service: logstash
+    build: ./logstash
     volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - mysqllog:/mnt/data:rw
+    ports:
+      - "5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - default
     depends_on:
       - elasticsearch
 
   kibana:
-    extends:
-      file: ./kibana/docker-compose.yml
-      service: kibana
-    depends_on:
-      - elasticsearch
+    image: docker.elastic.co/kibana/kibana-oss:6.1.0
+    expose:
+      - "5601"
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.backend=naturalis-kibana"
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.port=5601"
+      - ${KIBANA_URL_CONFIG:-traefik.frontend.rule=Host:kibana.docker.localhost}
+      - ${KIBANA_AUTH:-traefik.frontend.auth.basic=kibana:$apr1$.lcgllId$9sUY3fPk/gDuh3NQ55024/}
 
-  schemaspy:
-    extends:
-      file: ./schemaspy/docker-compose.yml
-      service: schemaspy
-    depends_on:
-      - mysql
+  grafana:
+    #image: grafana/grafana
+    image: grafana/grafana:master
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASS:-secret}
+    expose:
+      - "3000"
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.backend=naturalis-grafana"
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.port=3000"
+      - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:grafana.docker.localhost}
+
+  mysql:
+    build: ./mysql
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/scripts:/scripts
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  mysqlsh:
+    build: ./mysqlsh
+    tty: true
+    volumes:
+      - mysqllog:/tmp
+      - ./mysqlsh/scripts:/scripts
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  phpmyadmin:
+    build: ./phpmyadmin
+    volumes:
+      - /sessions
+    expose:
+      - "80"
+    networks:
+      - web
+      - default
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${MYSQL_HOST}
+      - PMA_PORT=${MYSQL_PORT}
+      - PMA_USER=root
+      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    labels:
+      - "traefik.backend=naturalis-phpmyadmin"
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - ${PHPMYADMIN_URL_CONFIG:-traefik.frontend.rule=Host:phpmyadmin.docker.localhost}
 
   schemaspy_nginx:
-    extends:
-      file: ./schemaspy/docker-compose.yml
-      service: schemaspy_nginx
-    depends_on:
-      - mysql
+    image: nginx:1.13.1-alpine
+    volumes:
+      - schemaspy_data:/var/www/html:ro
+      - ./schemaspy_nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    expose:
+      - "80"
+    networks:
+      - web
+    command: "nginx -g 'daemon off;'"
+    labels:
+      - "traefik.backend=naturalis-schemaspy"
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - ${SCHEMASPY_URL_CONFIG:-traefik.frontend.rule=Host:schemaspy.docker.localhost}
+
+  schemaspy:
+    image: schemaspy/schemaspy:snapshot
+    volumes:
+      - schemaspy_data:/output
+#     - ./schemaspy.properties:/schemaspy.properties
+    networks:
+      - pgnet
+    command: "-t mysql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DATABASE} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
+
+networks:
+  pgnet:
+  web:
+    external: true
 
 volumes:
   mysqldata:
   mysqllog:
   mariadbdata:
   mariadblog:
-  esdata:
+  elasticsearch_data:
   schemaspydata:
-
-networks:
-  esnet:
-    driver: bridge
+  grafana_data:
+  schemaspy_data:
