@@ -126,8 +126,8 @@ services:
       - PMA_ARBITRARY=1
       - PMA_HOST=${MYSQL_HOST}
       - PMA_PORT=${MYSQL_PORT}
-      - PMA_USER=root
-      - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - PMA_USER=${MYSQL_USER}
+      - PMA_PASSWORD=${MYSQL_PASSWORD}
     labels:
       - "traefik.backend=naturalis-phpmyadmin"
       - "traefik.docker.network=web"
