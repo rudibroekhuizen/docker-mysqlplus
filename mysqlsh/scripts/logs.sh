@@ -7,3 +7,4 @@ yes "mysql -b -N -h mysql -u root -pmypass mysql < /scripts/general.sql >> /tmp/
 #yes "mysql -b -N -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < /scripts/general.sql >> /tmp/general.log" | parallel --jobs 1 --delay 60 &
 
 #mysqlsh --uri root:mypass@mysql/mysql:3306 --json=raw --sqlc --file=slow.sql
+#mysqlsh --uri root:mypass@mysql:3306/mysql --classic --sqlc < general.sql 
