@@ -100,6 +100,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - default
 
   mysqlsh:
     build: ./mysqlsh
@@ -112,6 +114,8 @@ services:
       #MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ANALYTICS_USER: ${MYSQL_ANALYTICS_USER}
       MYSQL_ANALYTICS_PASSWORD: ${MYSQL_ANALYTICS_PASSWORD}
+    networks:
+      - default
 
   phpmyadmin:
     build: ./phpmyadmin
