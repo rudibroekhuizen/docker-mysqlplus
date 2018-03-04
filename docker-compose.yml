@@ -158,7 +158,7 @@ services:
       - schemaspy_data:/output
 #     - ./schemaspy.properties:/schemaspy.properties
     networks:
-      - pgnet
+      - default
     command: "-t mysql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_DATABASE} -s ${MYSQL_SCHEMA} -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"
 
 networks:
