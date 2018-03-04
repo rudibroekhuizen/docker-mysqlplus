@@ -15,12 +15,8 @@ COPY scripts /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/logs.sh
 
-CMD ["logs.sh"]
+ENTRYPOINT ["logs.sh"]
 
-
-
-
-
+#CMD ["logs.sh"]
 #ENTRYPOINT ["mysqlsh"]
-
 #CMD ["--help"]
