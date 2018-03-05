@@ -1,3 +1,5 @@
+#mysql -b -N -u root -pmypass mysql
+
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'mypass';
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
 
