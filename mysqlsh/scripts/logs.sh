@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# last line without & character!
+
 # global_status (strings/numbers
 yes "mysqlsh --json --sqlc --uri ${MYSQL_ANALYTICS_USER}:${MYSQL_ANALYTICS_PASSWORD}@${MYSQL_HOST}:3306/mysql < /scripts/global_status.sql | jq '.rows[] | .value|=tonumber? // .value|=tostring' | jq -c -s 'from_entries' >> /tmp/json.json" | parallel --jobs 1 --delay 60 &
 
@@ -12,7 +14,7 @@ yes "mysql -b -N -h ${MYSQL_HOST} -u ${MYSQL_ANALYTICS_USER} -p${MYSQL_ANALYTICS
 
 # general_log
 #yes "mysql -b -N -h mysql -u root -pmypass mysql < /scripts/general.sql >> /tmp/general.log" | parallel --jobs 1 --delay 60
-yes "mysql -b -N -h ${MYSQL_HOST} -u ${MYSQL_ANALYTICS_USER} -p${MYSQL_ANALYTICS_PASSWORD} mysql < /scripts/general.sql >> /tmp/general.log" | parallel --jobs 1 --delay 60 &
+yes "mysql -b -N -h ${MYSQL_HOST} -u ${MYSQL_ANALYTICS_USER} -p${MYSQL_ANALYTICS_PASSWORD} mysql < /scripts/general.sql >> /tmp/general.log" | parallel --jobs 1 --delay 60
 
 
 
