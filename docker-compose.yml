@@ -72,12 +72,14 @@ services:
       - ${KIBANA_AUTH:-traefik.frontend.auth.basic=kibana:$apr1$.lcgllId$9sUY3fPk/gDuh3NQ55024/}
 
   grafana:
-    #image: grafana/grafana
-    image: grafana/grafana:master
+    image: grafana/grafana:5.0.1
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASS:-secret}
+    # ports, comment to use traefik only
+    ports:
+      - 3000:3000
     expose:
       - "3000"
     networks:
@@ -161,7 +163,6 @@ services:
     image: schemaspy/schemaspy:snapshot
     volumes:
       - schemaspy_data:/output
-#     - ./schemaspy.properties:/schemaspy.properties
     networks:
       - default
     command: "-t mysql -host ${MYSQL_HOST} -port ${MYSQL_PORT} -db ${MYSQL_SCHEMA} -s ${MYSQL_SCHEMA} -u ${MYSQL_ANALYTICS_USER} -p ${MYSQL_ANALYTICS_PASSWORD}"
