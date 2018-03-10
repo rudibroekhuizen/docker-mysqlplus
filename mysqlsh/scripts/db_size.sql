@@ -1,5 +1,5 @@
 -- Database size and free space
-SELECT table_schema "database name",
+SELECT 'db_size' as tag, table_schema "database name",
   sum( data_length + index_length ) AS "database_size",
   sum( data_free ) AS "free_space"
 FROM information_schema.TABLES
