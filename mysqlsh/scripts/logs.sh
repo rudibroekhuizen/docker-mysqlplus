@@ -3,7 +3,7 @@
 # last line without & character!
 
 # database size and free space
-yes "mysqlsh --json --sqlc --uri ${MYSQL_ANALYTICS_USER}:${MYSQL_ANALYTICS_PASSWORD}@${MYSQL_HOST}:3306/mysql < /scripts/tables.sql | jq -c '.rows[] | .database_size|=tonumber | .free_space|=tonumber' >> /tmp/json.json" | parallel --jobs 1 --delay 60 &
+yes "mysqlsh --json --sqlc --uri ${MYSQL_ANALYTICS_USER}:${MYSQL_ANALYTICS_PASSWORD}@${MYSQL_HOST}:3306/mysql < /scripts/db_size.sql | jq -c '.rows[] | .database_size|=tonumber | .free_space|=tonumber' >> /tmp/json.json" | parallel --jobs 1 --delay 60 &
 
 # global_status (strings/numbers
 yes "mysqlsh --json --sqlc --uri ${MYSQL_ANALYTICS_USER}:${MYSQL_ANALYTICS_PASSWORD}@${MYSQL_HOST}:3306/mysql < /scripts/global_status.sql | jq '.rows[] | .value|=tonumber? // .value|=tostring' | jq -c -s 'from_entries' >> /tmp/json.json" | parallel --jobs 1 --delay 60 &
