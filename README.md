@@ -56,7 +56,7 @@ yes "mysql -b -N -u root -pmypass mysql < /scripts/query.sql" | head -n 1000 | p
 ### Useful commands
 ```bash
 # Remove Elasticsearch indexes:
-$ curl -XDELETE elasticsearch:9200/logstash-mysql-*
+$ curl -XDELETE elasticsearch:9200/logstash-*
 
 # Check CPU consumption
 $ docker stats $(docker inspect -f "{{ .Name }}" $(docker ps -q))
