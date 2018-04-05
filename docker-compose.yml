@@ -58,6 +58,9 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:6.1.0
+    # ports, comment to use traefik only
+    ports:
+      - 5601:5601
     expose:
       - "5601"
     networks:
@@ -124,6 +127,9 @@ services:
     build: ./phpmyadmin
     volumes:
       - /sessions
+    # ports, comment to use traefik only
+    ports:
+      - 80:80
     expose:
       - "80"
     networks:
