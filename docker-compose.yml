@@ -129,7 +129,7 @@ services:
       - /sessions
     # ports, comment to use traefik only
     ports:
-      - 80:80
+      - 8080:80
     expose:
       - "80"
     networks:
