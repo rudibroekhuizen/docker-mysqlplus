@@ -5,7 +5,7 @@ services:
     image: traefik:1.4.6
     #restart: always
     ports:
-      - 80:80
+      - 8080:80
       - 443:443
     networks:
       - web
@@ -129,7 +129,7 @@ services:
       - /sessions
     # ports, comment to use traefik only
     ports:
-      - 8080:80
+      - 80:80
     expose:
       - "80"
     networks:
