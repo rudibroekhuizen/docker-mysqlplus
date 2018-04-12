@@ -6,15 +6,14 @@ for i in {30..0}; do
       {
         "index" : {
           "mapping" : {
-           "total_fields" : {
-             "limit" : "2000"
-           }
-         }
-       }
-     }'
-  break;
-fi
-
+            "total_fields" : {
+              "limit" : "2000"
+            }
+          }
+        }
+      }'
+    break;
+  fi
 sleep 2
 done
 
