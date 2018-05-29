@@ -75,7 +75,7 @@ services:
       - ${KIBANA_AUTH:-traefik.frontend.auth.basic=admin:$apr1$LYKt7KdG$E49juU2GNNCE.23VscQ.P0}
 
   grafana:
-    image: grafana/grafana:5.0.1
+    image: grafana/grafana:5.1.3
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
