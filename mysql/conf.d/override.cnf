@@ -9,3 +9,8 @@ log_queries_not_using_indexes = on
 log_slow_admin_statements = on
 #long_query_time =
 min_examined_row_limit = 1
+
+[client]
+user = root
+password = mypass
+database = mysql
