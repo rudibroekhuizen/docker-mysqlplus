@@ -3,6 +3,7 @@ checkNewVersion = true
 logLevel = "INFO"
 defaultEntryPoints = ["http"]
 
+# Traefik status page
 [web]
 address = ":8080"
 
