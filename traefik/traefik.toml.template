@@ -20,7 +20,7 @@ address = ":8080"
 # Enable Docker configuration backend
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "naturalis.nl"
+domain = "grafana.geneious.naturalis.nl"
 watch = true
 exposedbydefault = false
 
