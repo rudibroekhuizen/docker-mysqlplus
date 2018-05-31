@@ -20,7 +20,7 @@ address = ":8080"
 # Enable Docker configuration backend
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "grafana.geneious.naturalis.nl"
+domain = "geneious.naturalis.nl"
 watch = true
 exposedbydefault = false
 
@@ -34,4 +34,6 @@ entryPoint = "https"
   [acme.httpChallenge]
   entryPoint = "http"
 
-
+[[acme.domains]]
+  main = "*geneious.naturalis.nl"
+  sans = ["grafana.geneious.naturalis.nl"]
