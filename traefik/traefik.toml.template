@@ -34,5 +34,5 @@ entryPoint = "https"
 OnHostRule = true
 
 # Use a HTTP-01 acme challenge rather than TLS-SNI-01 challenge
-acme.httpChallenge]
+[acme.httpChallenge]
 entryPoint = "http"
