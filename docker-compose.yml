@@ -180,6 +180,9 @@ services:
     hostname: 'sqlpad'
     ports:
       - '3030:3000'
+    networks:
+      - web
+      - default
     environment:
       - SQLPAD_DEBUG=TRUE
     volumes:
