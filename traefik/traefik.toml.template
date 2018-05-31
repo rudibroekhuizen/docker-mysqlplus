@@ -35,5 +35,5 @@ entryPoint = "https"
   entryPoint = "http"
 
 [[acme.domains]]
-  main = "*geneious.naturalis.nl"
+  main = "geneious.naturalis.nl"
   sans = ["grafana.geneious.naturalis.nl"]
