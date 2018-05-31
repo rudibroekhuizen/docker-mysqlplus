@@ -7,6 +7,9 @@ defaultEntryPoints = ["https","http"]
 [web]
 address = ":8080"
 
+# Uncomment the line to run on the staging let's encrypt server
+# caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
 # Entrypoints, http and https
 [entryPoints]
   [entryPoints.http]
@@ -35,4 +38,4 @@ OnHostRule = true
 
 # Use a HTTP-01 acme challenge rather than TLS-SNI-01 challenge
 [acme.httpChallenge]
-entryPoint = "http"
+  entryPoint = "http"
