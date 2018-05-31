@@ -191,7 +191,7 @@ services:
       - "traefik.backend=naturalis-sqlpad"
       - "traefik.docker.network=web"
       - "traefik.enable=true"
-      - "traefik.port=443"
+      - "traefik.port=3030"
       - ${SQLPAD_URL_CONFIG:-traefik.frontend.rule=Host:sqlpad.docker.localhost}
 #      - ${SQLPAD_AUTH:-traefik.frontend.auth.basic=admin:$apr1$LYKt7KdG$E49juU2GNNCE.23VscQ.P0}
 
