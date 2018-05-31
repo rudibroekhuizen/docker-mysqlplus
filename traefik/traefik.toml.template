@@ -7,9 +7,6 @@ defaultEntryPoints = ["https","http"]
 [web]
 address = ":8080"
 
-# Uncomment the line to run on the staging let's encrypt server
-# caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-
 # Entrypoints, http and https
 [entryPoints]
   [entryPoints.http]
@@ -19,8 +16,6 @@ address = ":8080"
   [entryPoints.https]
   address = ":443"
   [entryPoints.https.tls]
-
-[retry]
 
 # Enable Docker configuration backend
 [docker]
@@ -33,9 +28,10 @@ exposedbydefault = false
 [acme]
 email = "rudi.broekhuizen@naturalis.nl"
 storage = "acme.json"
-entryPoint = "https"
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 OnHostRule = true
-
-# Use a HTTP-01 acme challenge rather than TLS-SNI-01 challenge
-[acme.httpChallenge]
+entryPoint = "https"
+  [acme.httpChallenge]
   entryPoint = "http"
+
+
