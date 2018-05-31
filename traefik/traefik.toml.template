@@ -26,14 +26,15 @@ exposedbydefault = false
 
 # Enable ACME (Let's Encrypt): automatic SSL
 [acme]
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 email = "rudi.broekhuizen@naturalis.nl"
 storage = "acme.json"
-caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 OnHostRule = true
 entryPoint = "https"
   [acme.httpChallenge]
   entryPoint = "http"
 
 [[acme.domains]]
-  main = "geneious.naturalis.nl"
-  sans = ["grafana.geneious.naturalis.nl"]
+  main = "grafana.geneious.naturalis.nl"
+[[acme.domains]]
+  main = "sqlpad.geneious.naturalis.nl"
