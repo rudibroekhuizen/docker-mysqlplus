@@ -95,11 +95,15 @@ services:
       - ${GRAFANA_URL_CONFIG:-traefik.frontend.rule=Host:grafana.docker.localhost}
 
   mysql:
-    build: ./mysql
+    build:
+      context: ./mysql
+      args:
+        MYSQL_VERSION: ${MYSQL_VERSION}
     volumes:
       - ./mysql/conf.d:/etc/mysql/conf.d
       - ./mysql/scripts:/scripts
     environment:
+      MYSQL_VERSION: ${MYSQL_VERSION}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       #MYSQL_DATABASE: ${MYSQL_DATABASE}
       #MYSQL_USER: ${MYSQL_USER}
