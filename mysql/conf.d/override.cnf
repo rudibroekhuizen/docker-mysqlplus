@@ -1,4 +1,5 @@
 [mysqld]
+character-set-server = utf8mb4
 log_output = table
 general_log = 1
 #general_log_file = /tmp/general_log.log
@@ -9,3 +10,6 @@ log_queries_not_using_indexes = on
 log_slow_admin_statements = on
 #long_query_time =
 min_examined_row_limit = 1
+
+
+# https://medium.com/@adamhooper/in-mysql-never-use-utf8-use-utf8mb4-11761243e434
